@@ -174,10 +174,11 @@ for i in range(5):  # 设置最大循环次数
 
     # 3.1. 构建Prompt
     full_prompt = "\n".join(prompt_history)
+    # print(f"完整Prompt:\n 【{full_prompt}】\n")
 
     # 3.2. 调用LLM进行思考
     llm_output = llm.generate(full_prompt, system_prompt=AGENT_SYSTEM_PROMPT)
-    print(f"截断前 模型输出:\n{llm_output}\n")
+    # print(f"截断前 模型输出:\n【{llm_output}】\n")
     # 模型可能会输出多余的Thought-Action，需要截断
     match = re.search(r'(Thought:.*?Action:.*?)(?=\n\s*(?:Thought:|Action:|Observation:)|\Z)', llm_output, re.DOTALL)
     if match:
@@ -185,7 +186,7 @@ for i in range(5):  # 设置最大循环次数
         if truncated != llm_output.strip():
             llm_output = truncated
             print("已截断多余的 Thought-Action 对")
-    print(f"模型输出:\n{llm_output}\n")
+    print(f"模型输出:\n【{llm_output}】\n")
     prompt_history.append(llm_output)
 
     # 3.3. 解析并执行行动
